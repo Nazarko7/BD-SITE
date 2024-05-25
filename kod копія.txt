@@ -1,0 +1,354 @@
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY AUTO_INCREMENT,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    Phone VARCHAR(15),
+    Address VARCHAR(255),
+    City VARCHAR(50),
+    State VARCHAR(50),
+    ZipCode VARCHAR(10),
+    Country VARCHAR(50)
+);
+CREATE TABLE Tours (
+    TourID INT PRIMARY KEY AUTO_INCREMENT,
+    TourName VARCHAR(100) NOT NULL,
+    Description TEXT,
+    StartDate DATE NOT NULL,
+    EndDate DATE NOT NULL,
+    Price DECIMAL(10, 2) NOT NULL,
+    Capacity INT NOT NULL
+);
+CREATE TABLE Receipts (
+    ReceiptID INT PRIMARY KEY AUTO_INCREMENT,
+    CustomerID INT NOT NULL,
+    TourID INT NOT NULL,
+    BookingDate DATE NOT NULL,
+    TotalAmount DECIMAL(10, 2) NOT NULL,
+    PaymentMethod VARCHAR(50),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    FOREIGN KEY (TourID) REFERENCES Tours(TourID)
+);
+CREATE TABLE Payments (
+    PaymentID INT PRIMARY KEY AUTO_INCREMENT,
+    ReceiptID INT NOT NULL,
+    PaymentDate DATE NOT NULL,
+    Amount DECIMAL(10, 2) NOT NULL,
+    PaymentMethod VARCHAR(50) NOT NULL,
+    FOREIGN KEY (ReceiptID) REFERENCES Receipts(ReceiptID)
+);
+CREATE TABLE TourGuides (
+    TourGuideID INT PRIMARY KEY AUTO_INCREMENT,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    Phone VARCHAR(15)
+);
+CREATE TABLE TourAssignments (
+    TourID INT NOT NULL,
+    TourGuideID INT NOT NULL,
+    PRIMARY KEY (TourID, TourGuideID),
+    FOREIGN KEY (TourID) REFERENCES Tours(TourID),
+    FOREIGN KEY (TourGuideID) REFERENCES TourGuides(TourGuideID)
+);
+CREATE TABLE Locations (
+    LocationID INT PRIMARY KEY AUTO_INCREMENT,
+    TourID INT NOT NULL,
+    LocationName VARCHAR(100) NOT NULL,
+    Description TEXT,
+    FOREIGN KEY (TourID) REFERENCES Tours(TourID)
+);
+CREATE TABLE CustomerReviews (
+    ReviewID INT PRIMARY KEY AUTO_INCREMENT,
+    CustomerID INT NOT NULL,
+    TourID INT NOT NULL,
+    ReviewDate DATE NOT NULL,
+    Rating INT CHECK (Rating >= 1 AND Rating <= 5),
+    Comment TEXT,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    FOREIGN KEY (TourID) REFERENCES Tours(TourID)
+);
+CREATE TABLE TourBookings (
+    BookingID INT PRIMARY KEY AUTO_INCREMENT,
+    CustomerID INT NOT NULL,
+    TourID INT NOT NULL,
+    BookingDate DATE NOT NULL,
+    NumberOfPeople INT NOT NULL,
+    TotalCost DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    FOREIGN KEY (TourID) REFERENCES Tours(TourID)
+);
+CREATE TABLE Tours (
+    TourID INT PRIMARY KEY AUTO_INCREMENT,
+    TourName
+
+
+INSERT INTO Customers (FirstName, LastName, Email, Phone, Address, City, State, ZipCode, Country) 
+VALUES ('John', 'Doe', 'john.doe@example.com', '123-456-7890', '123 Main St', 'New York', 'NY', '10001', 'USA');
+
+INSERT INTO Customers (FirstName, LastName, Email, Phone, Address, City, State, ZipCode, Country) 
+VALUES ('Jane', 'Smith', 'jane.smith@example.com', '234-567-8901', '456 Elm St', 'Los Angeles', 'CA', '90001', 'USA');
+
+INSERT INTO Customers (FirstName, LastName, Email, Phone, Address, City, State, ZipCode, Country) 
+VALUES ('Michael', 'Johnson', 'michael.johnson@example.com', '345-678-9012', '789 Pine St', 'Chicago', 'IL', '60601', 'USA');
+
+INSERT INTO Customers (FirstName, LastName, Email, Phone, Address, City, State, ZipCode, Country) 
+VALUES ('Emily', 'Davis', 'emily.davis@example.com', '456-789-0123', '321 Oak St', 'Houston', 'TX', '77001', 'USA');
+
+INSERT INTO Customers (FirstName, LastName, Email, Phone, Address, City, State, ZipCode, Country) 
+VALUES ('David', 'Wilson', 'david.wilson@example.com', '567-890-1234', '654 Maple St', 'Phoenix', 'AZ', '85001', 'USA');
+
+INSERT INTO Customers (FirstName, LastName, Email, Phone, Address, City, State, ZipCode, Country) 
+VALUES ('Emma', 'Martinez', 'emma.martinez@example.com', '678-901-2345', '987 Cedar St', 'Philadelphia', 'PA', '19019', 'USA');
+
+INSERT INTO Customers (FirstName, LastName, Email, Phone, Address, City, State, ZipCode, Country) 
+VALUES ('Daniel', 'Anderson', 'daniel.anderson@example.com', '789-012-3456', '123 Birch St', 'San Antonio', 'TX', '78201', 'USA');
+
+INSERT INTO Customers (FirstName, LastName, Email, Phone, Address, City, State, ZipCode, Country) 
+VALUES ('Sophia', 'Thomas', 'sophia.thomas@example.com', '890-123-4567', '456 Spruce St', 'San Diego', 'CA', '92101', 'USA');
+
+INSERT INTO Customers (FirstName, LastName, Email, Phone, Address, City, State, ZipCode, Country) 
+VALUES ('James', 'Jackson', 'james.jackson@example.com', '901-234-5678', '789 Fir St', 'Dallas', 'TX', '75201', 'USA');
+
+INSERT INTO Customers (FirstName, LastName, Email, Phone, Address, City, State, ZipCode, Country) 
+VALUES ('Olivia', 'White', 'olivia.white@example.com', '012-345-6789', '321 Aspen St', 'San Jose', 'CA', '95101', 'USA');
+
+INSERT INTO Tours (TourName, Description, StartDate, EndDate, Price, Capacity) 
+VALUES ('Grand Canyon Adventure', 'Explore the stunning Grand Canyon.', '2024-06-01', '2024-06-07', 999.99, 20);
+
+INSERT INTO Tours (TourName, Description, StartDate, EndDate, Price, Capacity) 
+VALUES ('European Highlights', 'Experience the best of Europe in two weeks.', '2024-07-15', '2024-07-29', 2499.99, 30);
+
+INSERT INTO Tours (TourName, Description, StartDate, EndDate, Price, Capacity) 
+VALUES ('Safari in Kenya', 'Witness the Great Migration and the Big Five.', '2024-08-05', '2024-08-12', 1999.99, 15);
+
+INSERT INTO Tours (TourName, Description, StartDate, EndDate, Price, Capacity) 
+VALUES ('Japan Cherry Blossom Tour', 'See the beautiful cherry blossoms in Japan.', '2024-04-01', '2024-04-10', 2999.99, 25);
+
+INSERT INTO Tours (TourName, Description, StartDate, EndDate, Price, Capacity) 
+VALUES ('Australian Outback Expedition', 'Adventure through the Australian Outback.', '2024-09-01', '2024-09-14', 3499.99, 20);
+
+INSERT INTO Tours (TourName, Description, StartDate, EndDate, Price, Capacity) 
+VALUES ('Alaskan Cruise', 'Enjoy the breathtaking views of Alaska on a cruise.', '2024-06-15', '2024-06-22', 1499.99, 50);
+
+INSERT INTO Tours (TourName, Description, StartDate, EndDate, Price, Capacity) 
+VALUES ('South American Explorer', 'Discover the wonders of South America.', '2024-11-01', '2024-11-15', 3999.99, 25);
+
+INSERT INTO Tours (TourName, Description, StartDate, EndDate, Price, Capacity) 
+VALUES ('Egyptian Pyramids Tour', 'Explore the ancient pyramids of Egypt.', '2024-10-10', '2024-10-17', 2499.99, 30);
+
+INSERT INTO Tours (TourName, Description, StartDate, EndDate, Price, Capacity) 
+VALUES ('New Zealand Adventure', 'Experience the natural beauty of New Zealand.', '2024-12-01', '2024-12-10', 3299.99, 20);
+
+INSERT INTO Tours (TourName, Description, StartDate, EndDate, Price, Capacity) 
+VALUES ('Iceland Northern Lights', 'See the stunning Northern Lights in Iceland.', '2024-03-05', '2024-03-12', 1799.99, 20);
+
+INSERT INTO Receipts (CustomerID, TourID, BookingDate, TotalAmount, PaymentMethod) 
+VALUES (1, 1, '2024-05-01', 999.99, 'Credit Card');
+
+INSERT INTO Receipts (CustomerID, TourID, BookingDate, TotalAmount, PaymentMethod) 
+VALUES (2, 2, '2024-06-01', 2499.99, 'Credit Card');
+
+INSERT INTO Receipts (CustomerID, TourID, BookingDate, TotalAmount, PaymentMethod) 
+VALUES (3, 3, '2024-06-15', 1999.99, 'PayPal');
+
+INSERT INTO Receipts (CustomerID, TourID, BookingDate, TotalAmount, PaymentMethod) 
+VALUES (4, 4, '2024-03-15', 2999.99, 'Credit Card');
+
+INSERT INTO Receipts (CustomerID, TourID, BookingDate, TotalAmount, PaymentMethod) 
+VALUES (5, 5, '2024-08-01', 3499.99, 'Debit Card');
+
+INSERT INTO Receipts (CustomerID, TourID, BookingDate, TotalAmount, PaymentMethod) 
+VALUES (6, 6, '2024-04-20', 1499.99, 'Credit Card');
+
+INSERT INTO Receipts (CustomerID, TourID, BookingDate, TotalAmount, PaymentMethod) 
+VALUES (7, 7, '2024-10-05', 3999.99, 'PayPal');
+
+INSERT INTO Receipts (CustomerID, TourID, BookingDate, TotalAmount, PaymentMethod) 
+VALUES (8, 8, '2024-09-25', 2499.99, 'Credit Card');
+
+INSERT INTO Receipts (CustomerID, TourID, BookingDate, TotalAmount, PaymentMethod) 
+VALUES (9, 9, '2024-11-10', 3299.99, 'Debit Card');
+
+INSERT INTO Receipts (CustomerID, TourID, BookingDate, TotalAmount, PaymentMethod) 
+VALUES (10, 10, '2024-02-20', 1799.99, 'Credit Card');
+
+INSERT INTO Payments (ReceiptID, PaymentDate, Amount, PaymentMethod) 
+VALUES (1, '2024-05-02', 999.99, 'Credit Card');
+
+INSERT INTO Payments (ReceiptID, PaymentDate, Amount, PaymentMethod) 
+VALUES (2, '2024-06-02', 2499.99, 'Credit Card');
+
+INSERT INTO Payments (ReceiptID, PaymentDate, Amount, PaymentMethod) 
+VALUES (3, '2024-06-16', 1999.99, 'PayPal');
+
+INSERT INTO Payments (ReceiptID, PaymentDate, Amount, PaymentMethod) 
+VALUES (4, '2024-03-16', 2999.99, 'Credit Card');
+
+INSERT INTO Payments (ReceiptID, PaymentDate, Amount, PaymentMethod) 
+VALUES (5, '2024-08-02', 3499.99, 'Debit Card');
+
+INSERT INTO Payments (ReceiptID, PaymentDate, Amount, PaymentMethod) 
+VALUES (6, '2024-04-21', 1499.99, 'Credit Card');
+
+INSERT INTO Payments (ReceiptID, PaymentDate, Amount, PaymentMethod) 
+VALUES (7, '2024-10-06', 3999.99, 'PayPal');
+
+INSERT INTO Payments (ReceiptID, PaymentDate, Amount, PaymentMethod) 
+VALUES (8, '2024-09-26', 2499.99, 'Credit Card');
+
+INSERT INTO Payments (ReceiptID, PaymentDate, Amount, PaymentMethod) 
+VALUES (9, '2024-11-11', 3299.99, 'Debit Card');
+
+INSERT INTO Payments (ReceiptID, PaymentDate, Amount, PaymentMethod) 
+VALUES (10, '2024-02-21', 1799.99, 'Credit Card');
+
+INSERT INTO TourGuides (FirstName, LastName, Email, Phone) 
+VALUES ('Alice', 'Johnson', 'alice.johnson@example.com', '123-456-7890');
+
+INSERT INTO TourGuides (FirstName, LastName, Email, Phone) 
+VALUES ('Bob', 'Smith', 'bob.smith@example.com', '234-567-8901');
+
+INSERT INTO TourGuides (FirstName, LastName, Email, Phone) 
+VALUES ('Charlie', 'Brown', 'charlie.brown@example.com', '345-678-9012');
+
+INSERT INTO TourGuides (FirstName, LastName, Email, Phone) 
+VALUES ('Daisy', 'Miller', 'daisy.miller@example.com', '456-789-0123');
+
+INSERT INTO TourGuides (FirstName, LastName, Email, Phone) 
+VALUES ('Ethan', 'Wilson', 'ethan.wilson@example.com', '567-890-1234');
+
+INSERT INTO TourGuides (FirstName, LastName, Email, Phone) 
+VALUES ('Fiona', 'Davis', 'fiona.davis@example.com', '678-901-2345');
+
+INSERT INTO TourGuides (FirstName, LastName, Email, Phone) 
+VALUES ('George', 'Clark', 'george.clark@example.com', '789-012-3456');
+
+INSERT INTO TourGuides (FirstName, LastName, Email, Phone) 
+VALUES ('Hannah', 'Lewis', 'hannah.lewis@example.com', '890-123-4567');
+
+INSERT INTO TourGuides (FirstName, LastName, Email, Phone) 
+VALUES ('Ian', 'Walker', 'ian.walker@example.com', '901-234-5678');
+
+INSERT INTO TourGuides (FirstName, LastName, Email, Phone) 
+VALUES ('Julia', 'Hall', 'julia.hall@example.com', '012-345-6789');
+
+INSERT INTO TourAssignments (TourID, TourGuideID) 
+VALUES (1, 1);
+
+INSERT INTO TourAssignments (TourID, TourGuideID) 
+VALUES (2, 2);
+
+INSERT INTO TourAssignments (TourID, TourGuideID) 
+VALUES (3, 3);
+
+INSERT INTO TourAssignments (TourID, TourGuideID) 
+VALUES (4, 4);
+
+INSERT INTO TourAssignments (TourID, TourGuideID) 
+VALUES (5, 5);
+
+INSERT INTO TourAssignments (TourID, TourGuideID) 
+VALUES (6, 6);
+
+INSERT INTO TourAssignments (TourID, TourGuideID) 
+VALUES (7, 7);
+
+INSERT INTO TourAssignments (TourID, TourGuideID) 
+VALUES (8, 8);
+
+INSERT INTO TourAssignments (TourID, TourGuideID) 
+VALUES (9, 9);
+
+INSERT INTO TourAssignments (TourID, TourGuideID) 
+VALUES (10, 10);
+
+INSERT INTO Locations (TourID, LocationName, Description) 
+VALUES (1, 'South Rim', 'The most accessible part of the Grand Canyon with stunning views.');
+
+INSERT INTO Locations (TourID, LocationName, Description) 
+VALUES (1, 'North Rim', 'A less crowded part of the Grand Canyon with beautiful scenery.');
+
+INSERT INTO Locations (TourID, LocationName, Description) 
+VALUES (2, 'Paris', 'The city of light, home to the Eiffel Tower and Louvre Museum.');
+
+INSERT INTO Locations (TourID, LocationName, Description) 
+VALUES (2, 'Rome', 'The eternal city, known for the Colosseum and Vatican City.');
+
+INSERT INTO Locations (TourID, LocationName, Description) 
+VALUES (3, 'Maasai Mara', 'A large game reserve in Kenya, famous for the Great Migration.');
+
+INSERT INTO Locations (TourID, LocationName, Description) 
+VALUES (3, 'Nairobi', 'The capital city of Kenya with a vibrant cultural scene.');
+
+INSERT INTO Locations (TourID, LocationName, Description) 
+VALUES (4, 'Tokyo', 'The bustling capital city of Japan, known for its modernity and tradition.');
+
+INSERT INTO Locations (TourID, LocationName, Description) 
+VALUES (4, 'Kyoto', 'A city in Japan famous for its classical Buddhist temples and gardens.');
+
+INSERT INTO Locations (TourID, LocationName, Description) 
+VALUES (5, 'Alice Springs', 'A remote town in Australia, considered the heart of the Outback.');
+
+INSERT INTO Locations (TourID, LocationName, Description) 
+VALUES (5, 'Uluru', 'A massive sandstone monolith in the heart of the Northern Territory’s arid “Red Centre.”');
+
+INSERT INTO CustomerReviews (CustomerID, TourID, ReviewDate, Rating, Comment) 
+VALUES (1, 1, '2024-06-10', 5, 'Amazing experience! Highly recommend.');
+
+INSERT INTO CustomerReviews (CustomerID, TourID, ReviewDate, Rating, Comment) 
+VALUES (2, 2, '2024-07-30', 4, 'Great tour, but could have been better organized.');
+
+INSERT INTO CustomerReviews (CustomerID, TourID, ReviewDate, Rating, Comment) 
+VALUES (3, 3, '2024-08-13', 5, 'An unforgettable safari adventure!');
+
+INSERT INTO CustomerReviews (CustomerID, TourID, ReviewDate, Rating, Comment) 
+VALUES (4, 4, '2024-04-15', 5, 'The cherry blossoms were beautiful, and the tour was fantastic.');
+
+INSERT INTO CustomerReviews (CustomerID, TourID, ReviewDate, Rating, Comment) 
+VALUES (5, 5, '2024-09-15', 4, 'Loved the Outback, but it was very hot.');
+
+INSERT INTO CustomerReviews (CustomerID, TourID, ReviewDate, Rating, Comment) 
+VALUES (6, 6, '2024-06-25', 5, 'The cruise was luxurious and the views were stunning.');
+
+INSERT INTO CustomerReviews (CustomerID, TourID, ReviewDate, Rating, Comment) 
+VALUES (7, 7, '2024-11-20', 3, 'Interesting places, but the tour guide was not very knowledgeable.');
+
+INSERT INTO CustomerReviews (CustomerID, TourID, ReviewDate, Rating, Comment) 
+VALUES (8, 8, '2024-10-20', 5, 'The pyramids are a must-see! Great tour overall.');
+
+INSERT INTO CustomerReviews (CustomerID, TourID, ReviewDate, Rating, Comment) 
+VALUES (9, 9, '2024-12-15', 4, 'Beautiful country, but the itinerary was too packed.');
+
+INSERT INTO CustomerReviews (CustomerID, TourID, ReviewDate, Rating, Comment) 
+VALUES (10, 10, '2024-03-15', 5, 'Seeing the Northern Lights was a dream come true.');
+
+INSERT INTO TourBookings (CustomerID, TourID, BookingDate, NumberOfPeople, TotalCost) 
+VALUES (1, 1, '2024-05-02', 2, 1999.98);
+
+INSERT INTO TourBookings (CustomerID, TourID, BookingDate, NumberOfPeople, TotalCost) 
+VALUES (2, 2, '2024-06-03', 1, 2499.99);
+
+INSERT INTO TourBookings (CustomerID, TourID, BookingDate, NumberOfPeople, TotalCost) 
+VALUES (3, 3, '2024-06-17', 2, 3999.98);
+
+INSERT INTO TourBookings (CustomerID, TourID, BookingDate, NumberOfPeople, TotalCost) 
+VALUES (4, 4, '2024-03-17', 1, 2999.99);
+
+INSERT INTO TourBookings (CustomerID, TourID, BookingDate, NumberOfPeople, TotalCost) 
+VALUES (5, 5, '2024-08-03', 2, 6999.98);
+
+INSERT INTO TourBookings (CustomerID, TourID, BookingDate, NumberOfPeople, TotalCost) 
+VALUES (6, 6, '2024-04-22', 1, 1499.99);
+
+INSERT INTO TourBookings (CustomerID, TourID, BookingDate, NumberOfPeople, TotalCost) 
+VALUES (7, 7, '2024-10-07', 3, 11999.97);
+
+INSERT INTO TourBookings (CustomerID, TourID, BookingDate, NumberOfPeople, TotalCost) 
+VALUES (8, 8, '2024-09-27', 2, 4999.98);
+
+INSERT INTO TourBookings (CustomerID, TourID, BookingDate, NumberOfPeople, TotalCost) 
+VALUES (9, 9, '2024-11-12', 1, 3299.99);
+
+INSERT INTO TourBookings (CustomerID, TourID, BookingDate, NumberOfPeople, TotalCost) 
+VALUES (10, 10, '2024-02-22', 2, 3599.98);

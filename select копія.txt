@@ -1,0 +1,71 @@
+1) SELECT * FROM Customers WHERE City = 'New York';
+
+2) SELECT * FROM Tours WHERE Price < 2000;
+
+3) SELECT * FROM TourBookings WHERE CustomerID = 1;
+
+4) SELECT * FROM CustomerReviews WHERE TourID = 3;
+
+5) SELECT * FROM Locations WHERE TourID = 2;
+
+6) SELECT Customers.*, TourBookings.*
+FROM Customers
+JOIN TourBookings ON Customers.CustomerID = TourBookings.CustomerID;
+
+7) SELECT TourID, AVG(Price) AS AvgPrice
+FROM Tours
+GROUP BY TourID
+ORDER BY AvgPrice DESC;
+
+8) SELECT *
+FROM TourBookings
+JOIN Tours ON TourBookings.TourID = Tours.TourID
+WHERE Tours.Price > 3000;
+
+9) SELECT TourID, COUNT(*) AS BookingCount
+FROM TourBookings
+GROUP BY TourID
+ORDER BY BookingCount DESC;
+
+10) SELECT Tours.*, COUNT(TourBookings.TourID) AS BookingCount
+FROM Tours
+LEFT JOIN TourBookings ON Tours.TourID = TourBookings.TourID
+GROUP BY Tours.TourID
+HAVING BookingCount > 10;
+
+11) SELECT Customers.*, Tours.*, CustomerReviews.*
+FROM Customers
+JOIN TourBookings ON Customers.CustomerID = TourBookings.CustomerID
+JOIN Tours ON TourBookings.TourID = Tours.TourID
+LEFT JOIN CustomerReviews ON Tours.TourID = CustomerReviews.TourID
+WHERE Tours.Price > 2000;
+
+12) SELECT Customers.*, Tours.*, TourBookings.*
+FROM Customers
+JOIN TourBookings ON Customers.CustomerID = TourBookings.CustomerID
+JOIN Tours ON TourBookings.TourID = Tours.TourID
+WHERE TourBookings.PaymentMethod = 'PayPal';
+
+13) SELECT Tours.TourID, Tours.TourName, AVG(CustomerReviews.Rating) AS AvgRating, COUNT(CustomerReviews.ReviewID) AS ReviewCount
+FROM Tours
+LEFT JOIN CustomerReviews ON Tours.TourID = CustomerReviews.TourID
+GROUP BY Tours.TourID, Tours.TourName;
+14) SELECT Tours.*
+
+FROM Tours
+LEFT JOIN (
+    SELECT TourID, COUNT(*) AS BookingCount
+    FROM TourBookings
+    GROUP BY TourID
+) AS Bookings ON Tours.TourID = Bookings.TourID
+LEFT JOIN (
+    SELECT TourID, AVG(Rating) AS AvgRating
+    FROM CustomerReviews
+    GROUP BY TourID
+) AS Ratings ON Tours.TourID = Ratings.TourID
+WHERE Bookings.BookingCount > 15 AND Ratings.AvgRating > 4;
+
+15) SELECT Tours.*
+FROM Tours
+JOIN Locations ON Tours.TourID = Locations.TourID
+WHERE Locations.Description LIKE '%mountain%';
